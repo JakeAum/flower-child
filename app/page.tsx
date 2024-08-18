@@ -1,46 +1,78 @@
-import Link from "next/link";
-import ButtonSignin from "@/components/ButtonSignin";
+"use client";
+import React, { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+import PlantCard from "@/components/PlantCard";
+import Header from "@/components/Header";
 
-export default function Page() {
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+const App: React.FC = () => {
+  const [plantData, setPlantData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchPlantData = async () => {
+      const { data, error } = await supabase.from("plants").select("*");
+
+      if (error) {
+        console.error("Error fetching plant data:", error);
+      } else {
+        setPlantData(data); // Set the entire array of data
+      }
+    };
+
+    fetchPlantData();
+  }, []);
+
+  if (plantData.length === 0) {
+    return (
+      <div className="h-screen flex-col justify-center align-items p-8">
+        <div role="alert" className="alert">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="stroke-info h-6 w-6 shrink-0"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <span>Waiting for data to load from database :P</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <header className="p-4 flex justify-end max-w-7xl mx-auto">
-        <ButtonSignin text="Login" />
-      </header>
-
-      <main>
-        <section className="flex flex-col items-center justify-center text-center gap-12 px-8 py-24">
-          <h1 className="text-3xl font-extrabold">Ship Fast ⚡️</h1>
-
-          <p className="text-lg opacity-80">
-            The start of your new startup... What are you gonna build?
-          </p>
-
-          <a
-            className="btn btn-primary"
-            href="https://shipfa.st/docs"
-            target="_blank"
-          >
-            Documentation & tutorials{" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </a>
-
-          <Link href="/blog" className="link link-hover text-sm">
-            Fancy a blog?
-          </Link>
-        </section>
-      </main>
+    <Header></Header>
+    <div className="container mx-auto mt-4 p-4">
+      {plantData.map((plant, index) => (
+        <PlantCard
+          key={index} // Use a unique key for each element
+          shelfNumber={plant.shelfNumber}
+          plantMaterialName={plant.plantMaterialName}
+          // image1={plant.image1}
+          // image2={plant.image2}
+          class={plant.class}
+          order={plant.order}
+          family={plant.family}
+          commonNames={plant.commonNames}
+          information={plant.note}
+          timestamp={plant.created_at}
+          toxic_bool={plant.is_toxic}
+          toxic_note={plant.toxicNote}
+          img_url = {plant.image_url}
+        />
+      ))}
+    </div>
     </>
   );
-}
+};
+
+export default App;

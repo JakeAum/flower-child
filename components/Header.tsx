@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonSignin from "./ButtonSignin";
+import ButtonSupport from "./ButtonSupport";
 import logo from "@/app/icon.png";
 import config from "@/config";
 
@@ -13,21 +14,22 @@ const links: {
   href: string;
   label: string;
 }[] = [
-  {
-    href: "/#pricing",
-    label: "Pricing",
-  },
-  {
-    href: "/#testimonials",
-    label: "Reviews",
-  },
-  {
-    href: "/#faq",
-    label: "FAQ",
-  },
+  // {
+  //   href: "/#pricing",
+  //   label: "Pricing",
+  // },
+  // {
+  //   href: "/#testimonials",
+  //   label: "Reviews",
+  // },
+  // {
+  //   href: "/#faq",
+  //   label: "FAQ",
+  // },
 ];
 
-const cta: JSX.Element = <ButtonSignin extraStyle="btn-primary" />;
+// const cta: JSX.Element = <ButtonSignin extraStyle="btn-primary" />;
+const cta: JSX.Element = <ButtonSupport/>;
 
 // A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
 // The header is responsive, and on mobile, the links are hidden behind a burger button.
@@ -41,7 +43,7 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-base-200">
+    <header className="bg-primary-content">
       <nav
         className="container flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"
@@ -62,7 +64,7 @@ const Header = () => {
               width={32}
               height={32}
             />
-            <span className="font-extrabold text-lg">{config.appName}</span>
+            <span className="font-extrabold text-lg text-base-200">{config.appName}</span>
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}

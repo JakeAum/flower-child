@@ -24,7 +24,7 @@ const ButtonSupport = () => {
       className="btn btn-sm"
       onClick={handleClick}
       data-tooltip-id="tooltip"
-      data-tooltip-content="Talk to support"
+      data-tooltip-content="Email"
       title="Chat with support"
     >
       <svg
@@ -39,7 +39,7 @@ const ButtonSupport = () => {
           clipRule="evenodd"
         />
       </svg>
-      Support
+      Contact Me
     </button>
   );
 };

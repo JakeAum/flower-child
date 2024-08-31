@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <PlausibleProvider domain={config.domainName} />
         </head>
       )}
-      <body className="h-full bg-primary bg-opacity-50">
+      <body className="h-full bg-primary bg-opacity-10">
         {/* ClientLayout contains all the client wrappers (Crisp chat support, toast messages, tooltips, etc.) */}
           <ClientLayout>{children}</ClientLayout>
           <Analytics />

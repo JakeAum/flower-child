@@ -4,8 +4,6 @@ import Image from "next/image";
 interface PlantCardProps {
   shelfNumber: string;
   plantMaterialName: string;
-  //   image1: string;
-  //   image2: string;
   class: string;
   order: string;
   family: string;
@@ -15,13 +13,12 @@ interface PlantCardProps {
   toxic_bool: boolean;
   toxic_note: string;
   img_url: string;
+  onClick: () => void;
 }
 
 const PlantCard: React.FC<PlantCardProps> = ({
   shelfNumber,
   plantMaterialName,
-  //   image1,
-  //   image2,
   class: plantClass,
   order,
   family,
@@ -31,79 +28,34 @@ const PlantCard: React.FC<PlantCardProps> = ({
   toxic_bool,
   toxic_note,
   img_url,
+  onClick,
 }) => {
   return (
-    <div className="card bg-base-100 shadow-xl mb-4">
+    <div
+      className="card card-compact bg-base-100 w-96 shadow-xl cursor-pointer"
+      onClick={onClick}
+    >
+      <figure>
+        <Image
+          src={img_url}
+          alt={`${plantMaterialName} image`}
+          width={150}
+          height={150}
+          layout="intrinsic"
+          objectFit="contain"
+          className="object-cover rounded"
+        />
+      </figure>
       <div className="card-body">
         <h2 className="card-title text-3xl text-bold mb-2">
           {plantMaterialName}
         </h2>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
-          {/* Column 1: Image */}
-          <div className="flex justify-center">
-            <Image
-              src={img_url}
-              alt={`${plantMaterialName} 1`}
-              width={150}
-              height={150}
-              layout="intrinsic"
-            objectFit="contain"
-              className="object-cover rounded"
-            />
-          </div>
-
-          {/* Column 2: Text Information */}
-          <div className="flex flex-col justify-center ">
-            <p>
-              <strong>Class:</strong> {plantClass}
-            </p>
-            <p>
-              <strong>Order:</strong> {order}
-            </p>
-            <p>
-              <strong>Family:</strong> {family}
-            </p>
-            <p>
-              <strong>Common Names:</strong> {commonNames}
-            </p>
-            <p>
-              <strong>Notes: </strong> 
-              {information} <strong>{toxic_note}</strong>
-            </p>
-          </div>
-
-          {/* Column 3: Daisy UI Stat Element */}
-          <div className="flex justify-center items-center">
-            <div className="stats lg:stats-vertical shadow">
-              <div className="stat">
-                <div className="stat-title">Located on Shelf:</div>
-                <div className="stat-value">{shelfNumber.slice(8)}</div>
-                <div className="stat-desc">{timestamp.slice(0, 10)}</div>
-              </div>
-
-              <div className="stat">
-                <div className="stat-title">Toxcicity</div>
-                <div
-                  className={
-                    toxic_bool === true
-                      ? "text-error"
-                      : toxic_bool === false
-                      ? "text-success"
-                      : "text-warning"
-                  }
-                >
-                  <strong className="text-xl">
-                    {toxic_bool === true
-                    ? "Yes"
-                    : toxic_bool === false
-                    ? "No"
-                    : "Unknown"}
-                    </strong>
-                </div>
-              </div>
-            </div>
-          </div>
+        <h3>{commonNames}</h3>
+        <div className="card-actions justify-end">
+          {!!shelfNumber && <div className="badge badge-ghost">{shelfNumber}</div>}
+          {toxic_bool === true && <div className="badge badge-error">Toxic</div>}
+          {toxic_bool === false && <div className="badge badge-success">Non-Toxic</div>}
+          {toxic_bool === null && <div className="badge badge-warning">Unknown</div>}
         </div>
       </div>
     </div>

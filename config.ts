@@ -3,10 +3,10 @@ import { ConfigProps } from "./types/config";
 
 const config = {
   // REQUIRED
-  appName: "FlowerChild",
+  appName: "The Garrity Collection",
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
   appDescription:
-    "CSU's future herbology Database",
+    "CSU Biology's Future Teaching / Research Archive",
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
   domainName: "flower-child.vercel.app",
   crisp: {

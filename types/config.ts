@@ -23,6 +23,7 @@ export type Theme =
   | "";
 
 export interface ConfigProps {
+  csuAdminEmail:string;
   appName: string;
   appDescription: string;
   domainName: string;

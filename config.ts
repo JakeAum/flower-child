@@ -2,6 +2,7 @@ import themes from "daisyui/src/theming/themes";
 import { ConfigProps } from "./types/config";
 
 const config = {
+  csuAdminEmail:"jacobauman00@gmail.com",
   // REQUIRED
   appName: "The Garrity Collection",
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)

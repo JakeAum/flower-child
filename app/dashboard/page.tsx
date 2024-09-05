@@ -78,16 +78,16 @@ export default function Dashboard() {
     };
 
     // Toggle user active status
-    const toggleUserActive = async (userId, currentStatus) => {
+    const toggleUserActive = async (userId: any, currentStatus: any) => {
       const { error } = await supabase
         .from("profiles")
-        .update({ is_active: !currentStatus }) // Toggle is_active status
+        .update({is_approved: !currentStatus }) // Toggle is_approved status
         .eq("id", userId);
 
       if (error) console.error("Error updating user:", error);
       else fetchUsers(); // Refresh the user list
     };
-
+  
     return (
       <div className="user-list">
         {users.map((user) => (
@@ -97,12 +97,12 @@ export default function Dashboard() {
           >
             <span>{user.email}</span>
             <button
-              onClick={() => toggleUserActive(user.id, user.is_active)}
+              onClick={() => toggleUserActive(user.id, user.is_approved)}
               className={`px-3 py-1 rounded ${
-                user.is_active ? "bg-green-500" : "bg-red-500"
+                user.is_approved ? "bg-green-500" : "bg-red-500"
               } text-white`}
             >
-              {user.is_active ? "Active" : "Inactive"}
+              {user.is_approved ? "Active" : "Inactive"}
             </button>
           </div>
         ))}
